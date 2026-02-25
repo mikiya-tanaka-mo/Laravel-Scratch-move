@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Post;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Symfony\Component\Yaml\Yaml;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,24 +18,59 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts');
+
+    $files = File::files(resource_path('posts'));
+
+
+
+    $posts = collect($files)
+        ->map(function ($file) {
+
+
+            $Document = YamlFrontMatter::parseFile($file);
+
+            return new Post(
+                $Document->title,
+                $Document->slug,
+                $Document->excerpt,
+                $Document->date,
+                $Document->body()
+            );
+        });
+
+
+    return view('posts', [
+        'posts' => $posts
+    ]);
 });
 
 
 Route::get('/posts/{slug}', function ($slug) {
 
-    $path = __DIR__ . "/../resources/posts/{$slug}.html";
+    // find a post by slug  and pass it to the view callde post
+    $post = Post::find($slug);
 
-    if (! file_exists($path)) {
-        abort(404);
-    }
+    return view('post', [
+        'post' => $post
+    ]);
 
-    $post = file_get_contents($path);
 
-    return view(
-        'post',
-        [
-            'post' => $post
-        ]
-    );
+    // $path = __DIR__ . "/../resources/posts/{$slug}.html";
+
+    // if (! file_exists($path)) {
+    //     abort(404);
+    // }
+
+    // cache()->remember("posts.{$slug}", now()->addMinutes(20), function () use ($path) {
+    //     return file_get_contents($path);
+    // });
+
+    // $post = file_get_contents($path);
+
+    // return view(
+    //     'post',
+    //     [
+    //         'post' => $post
+    //     ]
+    // );
 })->where('slug', '[A-z0-9\-]+');

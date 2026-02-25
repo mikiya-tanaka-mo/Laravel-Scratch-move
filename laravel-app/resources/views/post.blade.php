@@ -4,12 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?= $post->title ?></title>
 </head>
 
 <body>
+
+
     <article>
-        <?php echo $post ?>
+        <h1><?= $post->title ?></h1>
+        <?= $post->body ?>
     </article>
 
 

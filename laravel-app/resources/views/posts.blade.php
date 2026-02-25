@@ -4,40 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>posts.php</title>
     <link rel="stylesheet" href="/app.css">
     <!-- <script src="/app.js"></script> -->
 </head>
 
 <body>
-    <article>
-        <h1>MY first post</h1>
+    <? foreach ($posts as $post) : ?>
 
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia tempore excepturi ratione necessitatibus obcaecati mollitia explicabo quibusdam, est iure corrupti. Explicabo modi repudiandae maxime delectus rerum debitis quos sequi sint.
-        </p>
-    </article>
+        <article>
 
+            <h1>
+                <a href="/posts/<?= $post->slug; ?>">
+                    <?= $post->title; ?>
+                </a>
+            </h1>
+            <p><?= $post->excerpt; ?></p>
 
-    <article>
-        <h1>MY Second post</h1>
-
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia tempore excepturi ratione necessitatibus obcaecati mollitia explicabo quibusdam, est iure corrupti. Explicabo modi repudiandae maxime delectus rerum debitis quos sequi sint.
-        </p>
-    </article>
+        </article>
 
 
-    <article>
-        <h1>MY Second post</h1>
-
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia tempore excepturi ratione necessitatibus obcaecati mollitia explicabo quibusdam, est iure corrupti. Explicabo modi repudiandae maxime delectus rerum debitis quos sequi sint.
-        </p>
-    </article>
-
-
-
-</body>
+    <? endforeach; ?>
 
 </html>

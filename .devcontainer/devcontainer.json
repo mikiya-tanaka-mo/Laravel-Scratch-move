@@ -3,8 +3,7 @@
 {
 	"name": "PHP",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/php:3-8.5-trixie",
-	// Features to add to the dev container. More info: https://containers.dev/features.
+	"image": "mcr.microsoft.com/devcontainers/php:3-8.2", // Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Configure tool-specific properties.
 	// "customizations": {},
@@ -14,6 +13,13 @@
 	],
 	"features": {
 		"ghcr.io/devcontainers-extra/features/composer:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"codeium.codemium",
+			]
+		}
 	}
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
