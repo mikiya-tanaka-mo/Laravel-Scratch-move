@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use Symfony\Component\Yaml\Yaml;
+use App\Models\Category;
+
 
 
 /*
@@ -17,40 +19,39 @@ use Symfony\Component\Yaml\Yaml;
 |
 */
 
+// Route::get('/', function () {
+
+//     $files = File::files(resource_path('posts'));
+//     $posts = collect($files)
+//         ->map(function ($file) {
+//             $Document = YamlFrontMatter::parseFile($file);
+
+//             return new Post(
+//                 $Document->title,
+//                 $Document->slug,
+//                 $Document->excerpt,
+//                 $Document->date,
+//                 $Document->body()
+//             );
+//         });
+//     return view('posts', [
+//         'posts' => $posts
+//     ]);
+// });
+
 Route::get('/', function () {
-
-    $files = File::files(resource_path('posts'));
-
-
-
-    $posts = collect($files)
-        ->map(function ($file) {
-
-
-            $Document = YamlFrontMatter::parseFile($file);
-
-            return new Post(
-                $Document->title,
-                $Document->slug,
-                $Document->excerpt,
-                $Document->date,
-                $Document->body()
-            );
-        });
-
-
     return view('posts', [
-        'posts' => $posts
+        'posts' => Post::with('category')->get()
     ]);
 });
 
 
-Route::get('/posts/{slug}', function ($slug) {
+Route::get('/posts/{post:slug}', function (Post $post) {
 
     // find a post by slug  and pass it to the view callde post
-    $post = Post::find($slug);
 
     return view('post', [
+
         'post' => $post
     ]);
 
@@ -73,4 +74,10 @@ Route::get('/posts/{slug}', function ($slug) {
     //         'post' => $post
     //     ]
     // );
-})->where('slug', '[A-z0-9\-]+');
+});
+
+Route::get('categories/{category:slug}', function (Category $category) {
+    return view('posts', [
+        'posts' => $category->posts
+    ]);
+});

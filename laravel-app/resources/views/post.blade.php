@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $post->title ?></title>
-</head>
-
-<body>
+<x-layout>
 
 
     <article>
@@ -15,10 +6,10 @@
         <?= $post->body ?>
     </article>
 
+    <a href="categories/{{ $post->category->slug }}">{{ $post->category->name }}</a>
 
     <a href="/">
         <button>Back</button>
     </a>
-</body>
 
-</html>
+</x-layout>
