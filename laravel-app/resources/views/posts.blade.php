@@ -1,6 +1,6 @@
 <x-layout>
-    @foreach ($posts as $post)
-
+    <!-- @foreach ($posts as $post) -->
+    <!-- 
 
     <article>
 
@@ -9,13 +9,49 @@
                 <?= $post->title; ?>
             </a>
         </h1>
+        <p>By<a href="authors/{{ $post->author->username }}">{{ $post->author->name }}</a>in
+            <a href="categories/{{ $post->category->slug }}">{{ $post->category->name }}</a>
+        </p>
 
-        <a href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a>
         <p><?= $post->excerpt; ?></p>
 
     </article>
 
 
-    @endforeach
+    @endforeach -->
+
+
+
+    @include('components._post-header')
+
+
+
+    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+
+        @if ($posts->count())
+
+
+        <x-posts-grid :posts="$posts" />
+
+
+        @else
+        <p>No posts yet. Please check back later.</p>
+        @endif
+
+
+    </main>
+
+
+
+    {{--
+        <div class="lg:grid lg:grid-cols-3">
+
+            <x-post-card />
+            <x-post-card />
+            <x-post-card />
+        </div>
+         --}}
+
+
 
 </x-layout>
